@@ -25,6 +25,12 @@ def _parse_args():
         default="./output/logs/",
         help="Output directory for the logs",
     )
+    parser.add_argument(
+        "--plot_diagrams",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Whether to plot diagrams or not",
+    )
 
     return parser.parse_args()
 
@@ -129,12 +135,12 @@ def main(args):
     model = get_best_model(bg.model, mask, args.output_dir)
 
     pot_latent = GaussianPotential()
-    # plot_resulting_generator(model, pot, None)
-    # plot_results(model, pot, pot_latent, x_samples)
-    # plot_histogram(model, pot, pot_latent)
-    # plot_kde(model, pot, pot_latent)
-    # plot_latent_interpolation(model, pot, pot_latent, x_samples)
-    # plot_latent_representation(model, pot_latent, x_samples)
+    if args.plot_diagrams:
+        plot_resulting_generator(model, pot, None)
+        plot_results(model, pot, pot_latent, x_samples)
+        plot_kde(model, pot, pot_latent)
+        plot_latent_interpolation(model, pot, pot_latent, x_samples)
+        plot_latent_representation(model, pot_latent, x_samples)
 
     trainer2 = L.Trainer(max_epochs=10, 
                         check_val_every_n_epoch=2,
@@ -145,10 +151,11 @@ def main(args):
     trainer2.fit(bg, train_dataloader)
 
     model = get_best_model(bg.model, mask, args.output_dir)
-    plot_resulting_generator(model, pot, None)
-    plot_results(model, pot, pot_latent, x_samples)
-    plot_kde(model, pot, pot_latent)
-    plot_latent_interpolation(model, pot, pot_latent, x_samples)
+    if args.plot_diagrams:
+        plot_resulting_generator(model, pot, None)
+        plot_results(model, pot, pot_latent, x_samples)
+        plot_kde(model, pot, pot_latent)
+        plot_latent_interpolation(model, pot, pot_latent, x_samples)
 
 if __name__ == "__main__":
     args = _parse_args()
