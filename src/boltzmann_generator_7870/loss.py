@@ -36,8 +36,8 @@ def loss_kl(z, forward_model, u_config):
 
 def loss_rc(x, reaction_coord, kde):
     reaction_coord_vals = reaction_coord(x)
-    log_p = kde(reaction_coord_vals)
-    log_p = torch.mean(log_p)
+    log_p = kde.evaluate(reaction_coord_vals)
+    log_p = torch.mean(torch.from_numpy(log_p))
     return log_p
 
 def u_latent(z, e_high=1e10, e_max=1e20):

@@ -13,4 +13,6 @@ dependencies = [
     "torch",
     "lightning",
     "matplotlib",
+    "scipy",
+    "pytest",
 ]

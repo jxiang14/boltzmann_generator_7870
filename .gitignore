@@ -1,1 +1,8 @@
-./output
+output
+
+src/boltzmann_generator_7870.egg-info
+src/boltzmann_generator_7870/__pycache__
+
+.gitignore
+
+test/__pycache__
